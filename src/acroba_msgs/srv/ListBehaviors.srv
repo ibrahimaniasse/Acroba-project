@@ -1,0 +1,6 @@
+# Request — no input required
+---
+# Response — list of registered behaviors
+string[] behavior_names
+string[] behavior_types
+string[] behavior_descriptions

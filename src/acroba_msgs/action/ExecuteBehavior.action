@@ -1,0 +1,14 @@
+# Goal — which behavior to execute and its parameters
+string behavior_name
+string[] parameter_names
+string[] parameter_values
+---
+# Result — outcome of the behavior execution
+bool success
+string message
+float64 execution_time
+---
+# Feedback — continuous updates during execution
+string current_status
+float32 progress
+string detail
