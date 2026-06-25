@@ -1,0 +1,111 @@
+# Acroba Framework — Behavior Registry
+#
+# This file declares all behaviors available to the behavior manager.
+# The manager loads these at startup and makes them available via the
+# ExecuteBehavior action server.
+#
+# Each behavior entry specifies:
+#   - name: unique identifier used in action goals
+#   - module: Python module path for import
+#   - class: class name implementing BaseBehavior
+#   - description: human-readable summary
+#   - default_params: default parameter values (overridable at runtime)
+
+behaviors:
+  # ── Python behaviors (sequential, high-level) ──────────────
+
+  - name: move_to_waypoint
+    module: acroba_behaviors_py.move_to_waypoint
+    class: MoveToWaypoint
+    description: Navigate to a target (x, y, theta) pose
+    default_params:
+      linear_speed: "0.5"
+      angular_speed: "1.0"
+      distance_tolerance: "0.1"
+      heading_tolerance: "0.1"
+
+  - name: rotate_in_place
+    module: acroba_behaviors_py.rotate_in_place
+    class: RotateInPlace
+    description: Rotate to face a target heading
+    default_params:
+      angular_speed: "1.0"
+      heading_tolerance: "0.05"
+
+  - name: wait_for_trigger
+    module: acroba_behaviors_py.wait_for_trigger
+    class: WaitForTrigger
+    description: Wait for an external trigger signal
+    default_params:
+      trigger_topic: "/acroba/trigger"
+      timeout_sec: "0.0"
+
+  - name: return_to_home
+    module: acroba_behaviors_py.return_to_home
+    class: ReturnToHome
+    description: Return to the pose recorded at startup
+    default_params:
+      linear_speed: "0.4"
+      distance_tolerance: "0.15"
+
+  - name: patrol_loop
+    module: acroba_behaviors_py.patrol_loop
+    class: PatrolLoop
+    description: Cycle through a list of waypoints
+    default_params:
+      linear_speed: "0.5"
+      loop_count: "0"
+
+  - name: search_pattern
+    module: acroba_behaviors_py.search_pattern
+    class: SearchPattern
+    description: Systematic area coverage (lawnmower or spiral)
+    default_params:
+      pattern: "lawnmower"
+      spacing: "2.0"
+      area_width: "10.0"
+      area_height: "10.0"
+
+  - name: follow_path
+    module: acroba_behaviors_py.follow_path
+    class: FollowPath
+    description: Follow a predefined nav_msgs/Path
+    default_params:
+      lookahead_distance: "0.5"
+      linear_speed: "0.4"
+
+  - name: dock_at_station
+    module: acroba_behaviors_py.dock_at_station
+    class: DockAtStation
+    description: Approach and align with a docking station
+    default_params:
+      approach_speed: "0.2"
+      final_distance: "0.05"
+
+  - name: formation_hold
+    module: acroba_behaviors_py.formation_hold
+    class: FormationHold
+    description: Maintain a relative offset from a reference pose
+    default_params:
+      offset_x: "1.0"
+      offset_y: "0.0"
+      reference_topic: "/leader/odom"
+
+  # ── C++ behaviors (reactive, low-latency) ──────────────────
+  # These are registered as external action servers. The manager
+  # communicates with them via the standard ExecuteBehavior action.
+
+  - name: avoid_obstacle
+    module: external_cpp
+    class: AvoidObstacle
+    description: Reactive obstacle avoidance using direct LiDAR readings
+
+  - name: follow_wall
+    module: external_cpp
+    class: FollowWall
+    description: Wall-following behavior using LiDAR range analysis
+
+  - name: emergency_stop
+    module: external_cpp
+    class: EmergencyStop
+    description: Immediate full stop — highest priority, preempts all behaviors

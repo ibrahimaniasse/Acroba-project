@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>acroba_bringup</name>
+  <version>1.0.0</version>
+  <description>Launch files, simulation worlds, and robot model for the Acroba framework</description>
+  <maintainer email="ibrahimaniasse@github.com">Ibrahima NIASSE</maintainer>
+  <license>MIT</license>
+
+  <depend>rclpy</depend>
+  <depend>ros2launch</depend>
+  <depend>ros_gz_bridge</depend>
+  <depend>ros_gz_sim</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>acroba_manager</depend>
+  <depend>acroba_behaviors_py</depend>
+  <depend>acroba_behaviors_cpp</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
