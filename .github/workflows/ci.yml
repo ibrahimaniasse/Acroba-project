@@ -1,0 +1,45 @@
+name: ROS 2 CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  unit-tests:
+    name: Behavior & Lifecycle Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pyyaml
+
+      - name: Run Pytest
+        run: |
+          PYTHONPATH=src/acroba_behaviors_py:src/acroba_manager pytest test/ --tb=short -v
+
+  build-workspace:
+    name: Colcon Build (Ubuntu 22.04 / Humble)
+    runs-on: ubuntu-22.04
+    container:
+      image: ros:humble-ros-base
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies and build
+        run: |
+          apt-get update
+          apt-get install -y python3-pip
+          source /opt/ros/humble/setup.bash
+          rosdep update
+          rosdep install --from-paths src --ignore-src -y
+          colcon build --symlink-install

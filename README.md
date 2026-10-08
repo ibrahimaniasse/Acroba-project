@@ -1,5 +1,7 @@
 # Acroba Framework
 
+[![ROS 2 CI](https://github.com/ibrahimaniasse/Acroba-project/actions/workflows/ci.yml/badge.svg)](https://github.com/ibrahimaniasse/Acroba-project/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/Tests-43%2F43_Passing-SUCCESS?logo=pytest)](https://github.com/ibrahimaniasse/Acroba-project/actions)
 ![ROS 2](https://img.shields.io/badge/ROS_2-Humble-22314E?logo=ros)
 ![Language](https://img.shields.io/badge/Language-Python_3_%7C_C%2B%2B_17-blue)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
